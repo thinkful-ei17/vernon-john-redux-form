@@ -31,7 +31,10 @@ export class ReduxForm extends React.Component {
                 <h2>Report a problem with your delivery</h2>
                 <form onSubmit={this.props.handleSubmit((values) => this.onSubmit(values))}>
                     <div className="form-input">
-                    {this.getErrMessage('trackingNumber')}
+                        <div className='messages'>
+                            {this.getErrMessage('trackingNumber')}
+                            {this.props.message}
+                        </div>
                         <label htmlFor="trackingNumber">Tracking number</label>
                         <Field name="trackingNumber" value="" id="trackingNumber" component='input' validate={[required,nonEmpty,exactLength,onlyNumbers]}/>
                     </div>
@@ -58,9 +61,9 @@ export class ReduxForm extends React.Component {
 
 const mapStateToProps = state => {
   console.log('logging reduxform');
-
   return {
-    errorMessage: state.form.ReduxForm ? state.form.ReduxForm.syncErrors : {}
+    errorMessage: state.form.ReduxForm ? state.form.ReduxForm.syncErrors : {},
+    message: state.rootReducer.successMsg
   };
 }
 
