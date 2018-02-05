@@ -13,13 +13,14 @@ export class ReduxForm extends React.Component {
     console.log(value);
   }
     render() {
+      console.log(this.props);
         return (
             <div className='delivery-form'>
                 <h2>Report a problem with your delivery</h2>
                 <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
                     <div className="form-input">
                         <label htmlFor="trackingNumber">Tracking number</label>
-                        <Field name="trackingNumber" value="" id="trackingNumber" component='input' validate={[required,nonEmpty,exactLength(5),onlyNumbers]}/>
+                        <Field name="trackingNumber" value="" id="trackingNumber" component='input' validate={[required,nonEmpty,exactLength,onlyNumbers]}/>
                     </div>
                     <div className="form-input">
                         <label htmlFor="issue">What is your issue?</label>
@@ -43,6 +44,5 @@ export class ReduxForm extends React.Component {
 }
 
 export default reduxForm({
-    form: 'ReduxForm',
-
+    form: 'ReduxForm'
 })(ReduxForm)
