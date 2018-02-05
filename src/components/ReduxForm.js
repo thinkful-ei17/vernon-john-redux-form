@@ -2,14 +2,18 @@ import React from 'react';
 import {reduxForm, Field} from 'redux-form';
 import {required,nonEmpty,exactLength,onlyNumbers} from '../validate';
 import { connect } from 'react-redux';
+import { submitting } from '../actions/actions';
 
 export class ReduxForm extends React.Component {
   // constructor(props){
   //   super(props);
   // }
 
-  onSubmit(value) {
+  onSubmit(values) {
     console.log('-------This ran!---------');
+    console.log('HEY WHATS UP HELLO IROFHWEIRFEW:', values)
+    this.props.dispatch(submitting(JSON.stringify(values))); 
+        
   }
 
   getErrMessage(keyName) {
@@ -25,7 +29,7 @@ export class ReduxForm extends React.Component {
         return (
             <div className='delivery-form'>
                 <h2>Report a problem with your delivery</h2>
-                <form onSubmit={this.props.handleSubmit(() => this.onSubmit())}>
+                <form onSubmit={this.props.handleSubmit((values) => this.onSubmit(values))}>
                     <div className="form-input">
                     {this.getErrMessage('trackingNumber')}
                         <label htmlFor="trackingNumber">Tracking number</label>
@@ -61,7 +65,10 @@ const mapStateToProps = state => {
 }
 
 ReduxForm = reduxForm({
-    form: 'ReduxForm'
+    form: 'ReduxForm',
+    initialValues: {
+        issue: 'not-delivered'
+    }
 })(ReduxForm)
 
 ReduxForm = connect(mapStateToProps)(ReduxForm);
