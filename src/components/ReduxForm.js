@@ -4,17 +4,25 @@ import {required,nonEmpty,exactLength,onlyNumbers} from '../validate';
 
 
 export class ReduxForm extends React.Component {
+  // constructor(props){
+  //   super(props);
+  // }
+
+  onSubmit(value) {
+    console.log('This ran!');
+    console.log(value);
+  }
     render() {
         return (
-            <div class='delivery-form'>
+            <div className='delivery-form'>
                 <h2>Report a problem with your delivery</h2>
                 <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
-                    <div class="form-input">
-                        <label for="trackingNumber">Tracking number</label>
-                        <Field name="trackingNumber" value="" id="trackingNumber" component='input'/>
+                    <div className="form-input">
+                        <label htmlFor="trackingNumber">Tracking number</label>
+                        <Field name="trackingNumber" value="" id="trackingNumber" component='input' validate={[required,nonEmpty,exactLength(5),onlyNumbers]}/>
                     </div>
-                    <div class="form-input">
-                        <label for="issue">What is your issue?</label>
+                    <div className="form-input">
+                        <label htmlFor="issue">What is your issue?</label>
                         <Field name="issue" id="issue" component='select'>
                             <option value="not-delivered">My delivery hasn't arrived</option>
                             <option value="wrong-item">The wrong item was delivered</option>
@@ -23,8 +31,8 @@ export class ReduxForm extends React.Component {
                             <option value="other">Other (give details below)</option>
                         </Field>
                     </div>
-                    <div class="form-input">
-                        <label for="details">Give more details (optional)</label>
+                    <div className="form-input">
+                        <label htmlFor="details">Give more details (optional)</label>
                         <Field name="details" id="details" component='textarea'/>
                     </div>
                     <button type="submit">Submit</button>
@@ -34,7 +42,7 @@ export class ReduxForm extends React.Component {
     }
 }
 
-export default reduxForm({ 
+export default reduxForm({
     form: 'ReduxForm',
 
 })(ReduxForm)
