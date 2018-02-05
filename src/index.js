@@ -6,7 +6,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-    <Provider>
+    <Provider store={store}>
         <App />
     </Provider>
 , document.getElementById('root'));
