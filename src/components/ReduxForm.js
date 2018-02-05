@@ -1,7 +1,7 @@
 import React from 'react';
 import {reduxForm, Field} from 'redux-form';
 import {required,nonEmpty,exactLength,onlyNumbers} from '../validate';
-
+import { connect } from 'react-redux';
 
 export class ReduxForm extends React.Component {
   // constructor(props){
@@ -42,7 +42,17 @@ export class ReduxForm extends React.Component {
         );
     }
 }
+const mapStateToProps = state => {
+  console.log(state.form);
 
-export default reduxForm({
+  return {
+    formStore: state.form
+  };
+}
+
+ReduxForm = reduxForm({
     form: 'ReduxForm'
 })(ReduxForm)
+
+ReduxForm = connect(mapStateToProps)(ReduxForm);
+export default ReduxForm;
