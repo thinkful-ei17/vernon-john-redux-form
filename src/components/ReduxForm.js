@@ -9,16 +9,25 @@ export class ReduxForm extends React.Component {
   // }
 
   onSubmit(value) {
-    console.log('This ran!');
-    console.log(value);
+    console.log('-------This ran!---------');
   }
+
+  getErrMessage(keyName) {
+    if (this.props.errorMessage) {
+      return this.props.submitFailed ? <p> {keyName} : {this.props.errorMessage[keyName]} </p> : '';
+    }
+
+    return '';
+  }
+
     render() {
       console.log(this.props);
         return (
             <div className='delivery-form'>
                 <h2>Report a problem with your delivery</h2>
-                <form onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}>
+                <form onSubmit={this.props.handleSubmit(() => this.onSubmit())}>
                     <div className="form-input">
+                    {this.getErrMessage('trackingNumber')}
                         <label htmlFor="trackingNumber">Tracking number</label>
                         <Field name="trackingNumber" value="" id="trackingNumber" component='input' validate={[required,nonEmpty,exactLength,onlyNumbers]}/>
                     </div>
@@ -42,11 +51,12 @@ export class ReduxForm extends React.Component {
         );
     }
 }
+
 const mapStateToProps = state => {
-  console.log(state.form);
+  console.log('logging reduxform');
 
   return {
-    formStore: state.form
+    errorMessage: state.form.ReduxForm ? state.form.ReduxForm.syncErrors : {}
   };
 }
 
